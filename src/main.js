@@ -11,6 +11,14 @@ Vue.use(Vant)
 // 移动端响应式布局
 import 'lib-flexible';
 
+// vConsole
+import VConsole from "vconsole";
+
+if(process.env.NODE_ENV === "development") {
+  const vConsole = new VConsole();
+  console.log(vConsole, 'e')
+}
+
 Vue.config.productionTip = false
 
 new Vue({
