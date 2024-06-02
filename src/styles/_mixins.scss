@@ -1,0 +1,27 @@
+// 重复定义样式
+@mixin flex {
+  display: flex;
+}
+
+@mixin flex-j-a($justify, $align) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// 响应式文本
+@mixin responsive-text($min-size, $max-size) {
+  font-size: $min-size;
+  @media (min-width: 768px) {
+    font-size: $max-size;
+  }
+}
+
+// 清除浮动
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
