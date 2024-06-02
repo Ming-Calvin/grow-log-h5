@@ -1,5 +1,6 @@
 module.exports = {
   css: {
+    // scss 配置
     loaderOptions: {
       scss: {
         additionalData: `
@@ -9,5 +10,19 @@ module.exports = {
         `
       }
     }
+  },
+  // 配置 px2rem-loader
+  chainWebpack: config => {
+    config.module
+      .rule('css')
+      .test(/\.css$/)
+      .oneOf('normal')
+      .use('px2rem')
+      .loader('px2rem-loader')
+      .options({
+        remUnit: 75, // 1rem 对应 75px
+        remPrecision: 8 // rem 小数点后保留的位数
+      })
+      .end();
   }
 };
