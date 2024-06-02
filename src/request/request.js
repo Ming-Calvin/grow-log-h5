@@ -1,6 +1,7 @@
 import axios from "axios";
 import store from "@/store";
 import errorCode from "@/utils/errorCode";
+import { getToken } from '@/utils/auth'
 
 axios.defaults.headers["Content-Type"] = "application/json";
 
@@ -22,6 +23,14 @@ const hideLoading = () => {
 
 service.interceptors.request.use(
   (config) => {
+    // 是否需要设置 token
+    const isToken = (config.headers || {}).isToken === false
+    // 是否需要防止数据重复提交
+    const isRepeatSubmit = (config.headers || {}).repeatSubmit === false
+    if (getToken() && !isToken) {
+      config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    }
+
     showLoading();
     return config;
   },
