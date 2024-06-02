@@ -22,8 +22,14 @@ if(process.env.NODE_ENV === "development") {
 import moment from "moment"
 Vue.prototype.$moment = moment
 
-// 设置全局事件总线
+// 设置全局组件
+import "@/components/index"
 
+// 设置全局事件总线
+Vue.prototype.$EventBus = new Vue();
+
+// 禁止生产模式提示信息
+Vue.config.productionTip = false
 
 Vue.config.productionTip = false
 
