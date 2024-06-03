@@ -12,9 +12,9 @@ Vue.use(Vant);
 import 'lib-flexible';
 
 // vConsole
-import VConsole from 'vconsole';
+// import VConsole from 'vconsole';
 if(process.env.NODE_ENV === 'development') {
-  const vConsole = new VConsole();
+  // const vConsole = new VConsole();
 }
 
 // 时间控件
