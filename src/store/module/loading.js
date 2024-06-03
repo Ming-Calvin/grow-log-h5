@@ -1,4 +1,4 @@
-let modules = {
+let loading = {
   // 封装到命名空间,允许设置重复的方法
   namespaced: true,
   state: {
@@ -11,4 +11,4 @@ let modules = {
   }
 };
 
-export default modules;
+export default loading;

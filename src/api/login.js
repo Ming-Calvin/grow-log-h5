@@ -8,3 +8,11 @@ export function login(params) {
     params
   });
 }
+
+export function getInfo(params) {
+  return request({
+    method: 'get',
+    url: config.baseUrl + '/api/getInfo',
+    params
+  });
+}
