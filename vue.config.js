@@ -20,7 +20,7 @@ module.exports = {
       .use('px2rem')
       .loader('px2rem-loader')
       .options({
-        remUnit: 75, // 1rem 对应 75px
+        remUnit: 37.5, // 1rem 对应 75px
         remPrecision: 8 // rem 小数点后保留的位数
       })
       .end();

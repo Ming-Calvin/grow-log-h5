@@ -1,16 +1,16 @@
 <template>
   <div>
-    <CustomForm></CustomForm>
+    
   </div>
 </template>
 
 <script>
-
-
 export default {
-  name: 'login',
+  name: 'CustomForm',
   data() {
-    return {};
+    return {
+
+    };
   }
 };
 
