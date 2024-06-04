@@ -3,14 +3,12 @@
     <van-form @submit="onSubmit">
       <template v-for="(item, index) in formConfig">
         <!--输入框-->
-        <van-field
-          :key="index"
-          v-if="item.type === 'field'"
-          v-model="data[item.prop]"
-          :name="item.value"
-          :label="item.label"
-          :placeholder="item.placeholder ? item.placeholder : '请输入' + item.name"
-          :rules="item.rules"/>
+        <van-field :key="index"
+                   v-if="item.type === 'field'"
+                   :name="item.prop"
+                   :label="item.label"
+                   :placeholder="item.placeholder ? item.placeholder : '请输入' + item.prop"
+                   :rules="item.rules"/>
 
         <!-- 开关 -->
         <van-field name="switch"
@@ -44,7 +42,7 @@
                                 direction="horizontal">
               <van-checkbox v-for="opt in item.options"
                             :key="opt.value"
-                            :name="opt.value"
+                            :name="opt.label"
                             shape="square">
                 {{ opt.label }}
               </van-checkbox>
@@ -62,8 +60,7 @@
                              direction="horizontal">
               <van-radio v-for="opt in item.options"
                          :key="opt.value"
-                         :name="opt.value"
-                         shape="square">
+                         :name="opt.value">
                 {{ opt.label }}
               </van-radio>
             </van-radio-group>
@@ -88,7 +85,7 @@
                    v-if="item.type === 'picker'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.name"
+                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.label"
                    @click="item.showPicker = true"
         />
         <van-popup v-model="item.showPicker"
@@ -97,7 +94,8 @@
                    position="bottom">
           <van-picker show-toolbar
                       :columns="item.options"
-                      @confirm="item.onConfirm()"
+                      value-key="label"
+                      @confirm="onConfirm(item.prop, $event)"
                       @cancel="item.showPicker = false"
           />
         </van-popup>
@@ -110,7 +108,7 @@
                    v-if="item.type === 'datetimePicker'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.name"
+                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
                    @click="item.showPicker = true"
         />
         <van-popup v-model="item.showPicker"
@@ -118,7 +116,7 @@
                    v-if="item.type === 'datetimePicker'"
                    position="bottom">
           <van-datetime-picker type="time"
-                               @confirm="item.onConfirm()"
+                               @confirm="onConfirm(item.prop, $event)"
                                @cancel="item.showPicker = false"
           />
         </van-popup>
@@ -131,7 +129,7 @@
                    v-if="item.type === 'area'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.name"
+                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
                    @click="item.showPicker = true"
         />
         <van-popup v-model="item.showPicker"
@@ -139,7 +137,7 @@
                    v-if="item.type === 'area'"
                    position="bottom">
           <van-area :area-list="item.areaList"
-                    @confirm="item.onConfirm()"
+                    @confirm="onConfirm(item.prop, $event)"
                     @cancel="item.showPicker = true"
           />
         </van-popup>
@@ -152,20 +150,28 @@
                    v-if="item.type === 'calendar'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.name"
-                   @click="item.showPicker = true"
+                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
+                   @click="showPicker(true)"
         />
         <van-calendar v-model="item.showPicker"
                       :key="'calendar' + item.prop"
                       v-if="item.type === 'calendar'"
-                      @confirm="item.onConfirm()" />
+                      @confirm="calendarConfirm(item, $event)" />
       </template>
+
+      <van-button round
+                  block
+                  type="info"
+                  native-type="submit">
+        提交
+      </van-button>
     </van-form>
   </div>
 </template>
 
 <script>
 import {deepClone} from '@/utils';
+import moment from 'moment/moment';
 
 export default {
   name: 'CustomForm',
@@ -191,6 +197,11 @@ export default {
       set: function(val) {
         this.$emit('update:formData', val);
       }
+    },
+    showPicker() {
+      return (boolean) => {
+        return boolean;
+      };
     }
   },
   watch: {
@@ -210,7 +221,27 @@ export default {
   },
   methods:{
     // 提交方法
-    onSubmit() {}
+    onSubmit(val) {
+      console.log(val, 'val');
+    },
+    // 日历确定
+    calendarConfirm(item, date) {
+      item.showPicker = false;
+      const e = moment(date).format('YYYY-MM-DD');
+      this.onConfirm(item.prop, e);
+    },
+    // 确认选项
+    onConfirm(prop, e) {
+      let value = '';
+
+      if(typeof e == 'object') {
+        value = e.value;
+      } else {
+        value = e;
+      }
+
+      this.data[prop] = value;
+    }
   }
 };
 
