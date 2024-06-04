@@ -86,7 +86,7 @@
                    :value="data[item.prop]"
                    :label="item.label"
                    :placeholder="item.placeholder ? item.placeholder : '请选择' + item.label"
-                   @click="item.showPicker = true"
+                   @click="showPicker(item, true)"
         />
         <van-popup v-model="item.showPicker"
                    :key="'picker' + item.prop"
@@ -96,7 +96,7 @@
                       :columns="item.options"
                       value-key="label"
                       @confirm="onConfirm(item.prop, $event)"
-                      @cancel="item.showPicker = false"
+                      @cancel="showPicker(item, false)"
           />
         </van-popup>
 
@@ -109,7 +109,7 @@
                    :value="data[item.prop]"
                    :label="item.label"
                    :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
-                   @click="item.showPicker = true"
+                   @click="showPicker(item, true)"
         />
         <van-popup v-model="item.showPicker"
                    :key="'datetimePicker' + item.prop"
@@ -117,7 +117,7 @@
                    position="bottom">
           <van-datetime-picker type="time"
                                @confirm="onConfirm(item.prop, $event)"
-                               @cancel="item.showPicker = false"
+                               @cancel="showPicker(item, false)"
           />
         </van-popup>
 
@@ -130,7 +130,7 @@
                    :value="data[item.prop]"
                    :label="item.label"
                    :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
-                   @click="item.showPicker = true"
+                   @click="showPicker(item, true)"
         />
         <van-popup v-model="item.showPicker"
                    :key="'area' + item.prop"
@@ -138,7 +138,7 @@
                    position="bottom">
           <van-area :area-list="item.areaList"
                     @confirm="onConfirm(item.prop, $event)"
-                    @cancel="item.showPicker = true"
+                    @cancel="showPicker(item, false)"
           />
         </van-popup>
 
@@ -151,7 +151,7 @@
                    :value="data[item.prop]"
                    :label="item.label"
                    :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
-                   @click="showPicker(true)"
+                   @click="showPicker(item, true)"
         />
         <van-calendar v-model="item.showPicker"
                       :key="'calendar' + item.prop"
@@ -197,11 +197,6 @@ export default {
       set: function(val) {
         this.$emit('update:formData', val);
       }
-    },
-    showPicker() {
-      return (boolean) => {
-        return boolean;
-      };
     }
   },
   watch: {
@@ -241,6 +236,10 @@ export default {
       }
 
       this.data[prop] = value;
+    },
+    // 展示弹窗
+    showPicker(config, boolean) {
+      config['showPicker'] = boolean;
     }
   }
 };
