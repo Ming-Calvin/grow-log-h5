@@ -1,14 +1,18 @@
 <template>
   <div>
-    <van-form @submit="onSubmit">
+    <van-form @submit="onSubmit"
+              ref="customForm">
       <template v-for="(item, index) in formConfig">
+
+        {{ getRules(item) }}
         <!--输入框-->
         <van-field :key="index"
                    v-if="item.type === 'field'"
+                   v-model="data[item.prop]"
                    :name="item.prop"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请输入' + item.prop"
-                   :rules="item.rules"/>
+                   :placeholder="item.placeholder ? item.placeholder : 'please enter' + item.prop"
+                   :rules="getRules(item)"/>
 
         <!-- 开关 -->
         <van-field name="switch"
@@ -85,7 +89,7 @@
                    v-if="item.type === 'picker'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.label"
+                   :placeholder="item.placeholder ? item.placeholder : 'please choose' + item.label"
                    @click="showPicker(item, true)"
         />
         <van-popup v-model="item.showPicker"
@@ -108,7 +112,7 @@
                    v-if="item.type === 'datetimePicker'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
+                   :placeholder="item.placeholder ? item.placeholder : 'please choose' + item.prop"
                    @click="showPicker(item, true)"
         />
         <van-popup v-model="item.showPicker"
@@ -129,7 +133,7 @@
                    v-if="item.type === 'area'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
+                   :placeholder="item.placeholder ? item.placeholder : 'please choose' + item.prop"
                    @click="showPicker(item, true)"
         />
         <van-popup v-model="item.showPicker"
@@ -150,7 +154,7 @@
                    v-if="item.type === 'calendar'"
                    :value="data[item.prop]"
                    :label="item.label"
-                   :placeholder="item.placeholder ? item.placeholder : '请选择' + item.prop"
+                   :placeholder="item.placeholder ? item.placeholder : 'please choose' + item.prop"
                    @click="showPicker(item, true)"
         />
         <van-calendar v-model="item.showPicker"
@@ -163,7 +167,7 @@
                   block
                   type="info"
                   native-type="submit">
-        提交
+        {{ submitBtn }}
       </van-button>
     </van-form>
   </div>
@@ -172,6 +176,7 @@
 <script>
 import {deepClone} from '@/utils';
 import moment from 'moment/moment';
+
 
 export default {
   name: 'CustomForm',
@@ -187,6 +192,12 @@ export default {
       type: Object,
       require: true,
       default: () => {}
+    },
+    // 表单按钮名称
+    submitBtn: {
+      type: String,
+      require: true,
+      default: 'Submit'
     }
   },
   computed: {
@@ -197,6 +208,22 @@ export default {
       set: function(val) {
         this.$emit('update:formData', val);
       }
+    },
+    // 获取规则
+    getRules() {
+      return (item) => {
+        const rules =  [];
+        if(item.require) {
+          // 必填
+          rules.push({ required: true, message: 'This field is required' });
+        }
+        if(item.rules) {
+          // 自定义规则
+          rules.push(item.rules);
+        }
+
+        return rules;
+      };
     }
   },
   watch: {
@@ -216,8 +243,8 @@ export default {
   },
   methods:{
     // 提交方法
-    onSubmit(val) {
-      console.log(val, 'val');
+    async onSubmit(val) {
+      this.$emit('onSubmit', val);
     },
     // 日历确定
     calendarConfirm(item, date) {

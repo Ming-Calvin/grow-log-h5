@@ -2,12 +2,15 @@
   <div>
     <CustomForm :config="loginConfig"
                 :formData="formData"
+                :submit-btn="'Login'"
+                @onSubmit="onSubmit"
     />
   </div>
 </template>
 
 <script>
 import { loginConfig } from '@/forms/loginForm';
+import {login} from '@/api/login';
 
 export default {
   name: 'login',
@@ -24,6 +27,12 @@ export default {
         return acc;
       }, {})
     };
+  },
+  methods: {
+    async onSubmit(data) {
+      const res = await login(data);
+      console.log(res);
+    }
   }
 };
 

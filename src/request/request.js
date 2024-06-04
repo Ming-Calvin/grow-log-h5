@@ -29,7 +29,7 @@ service.interceptors.request.use(
       config.headers['Authorization'] = 'Bearer ' + getToken();
     }
 
-    showLoading();
+    // showLoading();
     return config;
   },
   (error) => {
@@ -40,7 +40,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(res => {
   const code = res.data.code || 200;
   const msg = errorCode[code] || res.data.msg || errorCode['default'];
-  hideLoading();
+  // hideLoading();
   if (code === 401) {
     mToast.fail('登录状态已过期');
   } else if (code === 404) {
@@ -67,7 +67,7 @@ error => {
   else if (message.includes('Request failed with status code')) {
     message = '系统接口' + message.substr(message.length - 3) + '异常';
   }
-  hideLoading();
+  // hideLoading();
   mToast.fail(message);
   return Promise.reject(error);
 });

@@ -1,11 +1,11 @@
 import config from '@/request/config';
 import request from '@/request/request';
 
-export function login(params) {
+export function login(data) {
   return request({
-    method: 'get',
+    method: 'post',
     url: config.baseUrl + '/api/login',
-    params
+    data
   });
 }
 
