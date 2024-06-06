@@ -1,75 +1,70 @@
-import axios from 'axios';
-import store from '@/store';
-import errorCode from '@/utils/errorCode';
-import { getToken } from '@/utils/auth';
-import { mToast } from '@/utils/toast';
+import axios from 'axios'
+import store from '@/store'
+import errorCode from '@/utils/errorCode'
+import { getToken } from '@/utils/auth'
+import mToast from '@/utils/toast'
 
-axios.defaults.headers['Content-Type'] = 'application/json';
+axios.defaults.headers['Content-Type'] = 'application/json'
 
 const service = axios.create({
   timeout: 1000000
-});
+})
 
-let loadingCount = 0;
+let loadingCount = 0
 
 const showLoading = () => {
-  loadingCount++;
-  store.commit('loading/SET_LOADING', true);
-};
+  loadingCount++
+  store.commit('loading/SET_LOADING', true)
+}
 
 const hideLoading = () => {
-  loadingCount--;
-  if (loadingCount == 0) store.commit('loading/SET_LOADING', false);
-};
+  loadingCount--
+  if (loadingCount == 0) store.commit('loading/SET_LOADING', false)
+}
 
 service.interceptors.request.use(
   (config) => {
     // 是否需要设置 token
     if (getToken()) {
-      config.headers['Authorization'] = 'Bearer ' + getToken();
+      config.headers['Authorization'] = 'Bearer ' + getToken()
     }
 
-    showLoading();
-    return config;
+    showLoading()
+    return config
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
 service.interceptors.response.use(res => {
-  const code = res.data.code || 200;
-  const msg = errorCode[code] || res.data.msg || errorCode['default'];
-  hideLoading();
+  const code = res.data.code || 200
+  const msg = errorCode[code] || res.data.msg || errorCode['default']
+  hideLoading()
   if (code === 401) {
-    mToast.fail('登录状态已过期');
+    console.log(msg, 'msg')
+    mToast.fail(msg)
   } else if (code === 404) {
-    mToast.fail('请求不存在');
-    return Promise.reject(new Error(msg));
+    mToast.fail(msg)
+    return Promise.reject(new Error(msg))
   } else if (code === 500) {
-    mToast.fail(res.data.message);
-    return Promise.reject(new Error(msg));
+    mToast.fail(msg)
+    return Promise.reject(new Error(msg))
   } else if (code !== 200) {
-    mToast.fail(msg);
-    return Promise.reject('error');
+    mToast.fail(msg)
+    return Promise.reject('error')
   } else {
-    return res.data;
+    mToast.success(msg)
+    return res.data
   }
 },
 error => {
-  let { message } = error;
-  if (message == 'Network Error') {
-    message = '后端接口连接异常';
-  }
-  else if (message.includes('timeout')) {
-    message = '系统接口请求超时';
-  }
-  else if (message.includes('Request failed with status code')) {
-    message = '系统接口' + message.substr(message.length - 3) + '异常';
-  }
-  hideLoading();
-  mToast.fail(message);
-  return Promise.reject(error);
-});
+  let { response } = error
+  const msg = response.data.msg
 
-export default service;
+  hideLoading()
+  mToast.fail(msg)
+  return Promise.reject(error)
+})
+
+export default service

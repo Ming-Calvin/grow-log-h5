@@ -38,6 +38,6 @@ module.exports = {
         remUnit: 37.5, // 1rem 对应 75px
         remPrecision: 8 // rem 小数点后保留的位数
       })
-      .end();
+      .end()
   }
-};
+}

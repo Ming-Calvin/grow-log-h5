@@ -14,4 +14,4 @@ export const routes = [
     name: 'register',
     component: () => import('@/view/Register.vue')
   }
-];
+]

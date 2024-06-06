@@ -63,7 +63,8 @@
       ],
       "semi": [
         "error",
-        "always"
+        "never",
+        { "beforeStatementContinuationChars": "always" }
       ],
       "comma-dangle": [
         "error",

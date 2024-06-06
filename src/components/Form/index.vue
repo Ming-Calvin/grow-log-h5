@@ -174,8 +174,8 @@
 </template>
 
 <script>
-import {deepClone} from '@/utils';
-import moment from 'moment/moment';
+import {deepClone} from '@/utils'
+import moment from 'moment/moment'
 
 
 export default {
@@ -203,33 +203,33 @@ export default {
   computed: {
     data: {
       get: function() {
-        return this.formData;
+        return this.formData
       },
       set: function(val) {
-        this.$emit('update:formData', val);
+        this.$emit('update:formData', val)
       }
     },
     // 获取规则
     getRules() {
       return (item) => {
-        const rules =  [];
+        const rules =  []
         if(item.require) {
           // 必填
-          rules.push({ required: true, message: 'This field is required' });
+          rules.push({ required: true, message: 'This field is required' })
         }
         if(item.rules) {
           // 自定义规则
-          rules.push(item.rules);
+          rules.push(item.rules)
         }
 
-        return rules;
-      };
+        return rules
+      }
     }
   },
   watch: {
     config: {
       handler(value) {
-        this.formConfig = deepClone(value);
+        this.formConfig = deepClone(value)
       },
       deep: true,
       immediate: true
@@ -239,37 +239,37 @@ export default {
     return {
       // 表单配置
       formConfig: []
-    };
+    }
   },
   methods:{
     // 提交方法
     async onSubmit(val) {
-      this.$emit('onSubmit', val);
+      this.$emit('onSubmit', val)
     },
     // 日历确定
     calendarConfirm(item, date) {
-      item.showPicker = false;
-      const e = moment(date).format('YYYY-MM-DD');
-      this.onConfirm(item.prop, e);
+      item.showPicker = false
+      const e = moment(date).format('YYYY-MM-DD')
+      this.onConfirm(item.prop, e)
     },
     // 确认选项
     onConfirm(prop, e) {
-      let value = '';
+      let value = ''
 
       if(typeof e == 'object') {
-        value = e.value;
+        value = e.value
       } else {
-        value = e;
+        value = e
       }
 
-      this.data[prop] = value;
+      this.data[prop] = value
     },
     // 展示弹窗
     showPicker(config, boolean) {
-      config['showPicker'] = boolean;
+      config['showPicker'] = boolean
     }
   }
-};
+}
 
 </script>
 

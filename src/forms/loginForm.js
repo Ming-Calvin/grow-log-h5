@@ -1,4 +1,4 @@
-import {validEmail} from '@/utils/validate';
+import {validEmail} from '@/utils/validate'
 
 export const loginConfig = [
   {
@@ -14,4 +14,4 @@ export const loginConfig = [
     label: 'password',
     require: true
   }
-];
+]

@@ -8,9 +8,9 @@
 export default {
   name: 'register',
   data() {
-    return {};
+    return {}
   }
-};
+}
 
 </script>
 

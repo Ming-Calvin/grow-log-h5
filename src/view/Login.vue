@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import { loginConfig } from '@/forms/loginForm';
-import {login} from '@/api/login';
+import { loginConfig } from '@/forms/loginForm'
 
 export default {
   name: 'login',
@@ -19,26 +18,21 @@ export default {
       loginConfig: loginConfig,
       formData: loginConfig.reduce((acc, cur) => {
         if(cur.type === 'checkboxGroup' || cur.type === 'uploader') {
-          acc[cur.prop]  = [];
+          acc[cur.prop]  = []
         } else {
-          acc[cur.prop]  = '';
+          acc[cur.prop]  = ''
         }
 
-        return acc;
+        return acc
       }, {})
-    };
+    }
   },
   methods: {
     async onSubmit(data) {
-      try {
-        const res = await login(data);
-        console.log(res);
-      } catch (e) {
-        console.log(e);
-      }
+      this.$store.dispatch('user/Login', data)
     }
   }
-};
+}
 
 </script>
 

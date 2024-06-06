@@ -6,9 +6,9 @@ let loading = {
   },
   mutations: {
     SET_LOADING(state, status) {
-      state.loading = status;
+      state.loading = status
     }
   }
-};
+}
 
-export default loading;
+export default loading
