@@ -1,7 +1,6 @@
 // 注册全局组件
 import Vue from 'vue'
-
-const CustomForm = () => import('@/components/Form')
+import CustomForm from '@/components/Form'
 
 const globalComponents = [
   CustomForm

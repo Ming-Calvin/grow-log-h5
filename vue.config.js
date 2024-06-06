@@ -1,6 +1,6 @@
 module.exports = {
+  publicPath: './',
   outputDir: 'dist',
-  assetsDir: 'assets',
   devServer: {
     open: true, // 自动打开服务器
     host: '0.0.0.0', // 主机地址,支持局域网地址访问
@@ -11,6 +11,11 @@ module.exports = {
         target: 'http://localhost:3000', // 目标接口的域名和端口号
         changeOrigin: true, //支持跨域
         pathRewrite: { '^/dev': '' } // 路径重写
+      },
+      '/prod-dev': {
+        target: 'http://localhost:3000', // 目标接口的域名和端口号
+        changeOrigin: true, //支持跨域
+        pathRewrite: { '/prod-dev': '' } // 路径重写
       }
     }
   },
@@ -39,5 +44,16 @@ module.exports = {
         remPrecision: 8 // rem 小数点后保留的位数
       })
       .end()
+  },
+  // webpack配置
+  configureWebpack: {
+    // 在webpack的name字段中提供应用的标题，以便
+    // 可以在index.html中访问它来注入正确的标题。
+    name: 'vue-app',
+    resolve: {
+      alias: {
+        '@': require('path').resolve(__dirname, 'src')
+      }
+    }
   }
 }

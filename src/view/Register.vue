@@ -25,7 +25,6 @@
 </template>
 
 <script>
-
 import {registerConfig} from '@/forms/loginForm'
 import {validEmail} from '@/utils/validate'
 import mToast from '@/utils/toast'
