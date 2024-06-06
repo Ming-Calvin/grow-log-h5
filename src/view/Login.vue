@@ -30,8 +30,12 @@ export default {
   },
   methods: {
     async onSubmit(data) {
-      const res = await login(data);
-      console.log(res);
+      try {
+        const res = await login(data);
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 };
