@@ -2,9 +2,16 @@
   <div>
     <CustomForm :config="loginConfig"
                 :formData="formData"
-                :submit-btn="'Login'"
-                @onSubmit="onSubmit"
+                :submit-btn="'Log In'"
+                @onSubmit="logIn"
     />
+
+    <van-button round
+                block
+                type="info"
+                @click="register">
+      Register
+    </van-button>
   </div>
 </template>
 
@@ -28,8 +35,13 @@ export default {
     }
   },
   methods: {
-    async onSubmit(data) {
+    // 登录
+    logIn(data) {
       this.$store.dispatch('user/Login', data)
+    },
+    // 注册
+    register() {
+      this.$router.push({name: 'register'})
     }
   }
 }

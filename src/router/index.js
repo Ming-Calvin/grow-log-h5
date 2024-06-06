@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { getToken } from '@/utils/auth'
 import { routes } from '@/router/routes'
-// import store from '@/store';
 import mToast from '@/utils/toast'
 
 // 建立路由

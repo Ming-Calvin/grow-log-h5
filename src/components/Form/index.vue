@@ -3,16 +3,20 @@
     <van-form @submit="onSubmit"
               ref="customForm">
       <template v-for="(item, index) in formConfig">
-
-        {{ getRules(item) }}
         <!--输入框-->
         <van-field :key="index"
                    v-if="item.type === 'field'"
                    v-model="data[item.prop]"
                    :name="item.prop"
                    :label="item.label"
+                   :type="item.fieldType"
                    :placeholder="item.placeholder ? item.placeholder : 'please enter' + item.prop"
-                   :rules="getRules(item)"/>
+                   :rules="getRules(item)">
+          <template #button>
+            <slot v-if="item.button"
+                  :name="item.button"></slot>
+          </template>
+        </van-field>
 
         <!-- 开关 -->
         <van-field name="switch"
