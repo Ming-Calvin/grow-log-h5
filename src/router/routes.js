@@ -1,8 +1,9 @@
 export const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/view/Index.vue')
+    redirect: {
+      path: '/home'
+    }
   },
   {
     path: '/login',
@@ -13,5 +14,17 @@ export const routes = [
     path: '/register',
     name: 'register',
     component: () => import('@/view/Register.vue')
+  },
+  {
+    path: '/layout',
+    name: 'layout',
+    component: () => import('@/view/layout/index.vue'),
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: () => import('@/view/layout/index.vue')
+      }
+    ]
   }
 ]

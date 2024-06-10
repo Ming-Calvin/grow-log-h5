@@ -14,7 +14,7 @@ export function login(data) {
 export function getInfo(params) {
   return request({
     method: 'get',
-    url: config.baseUrl + '/api/getInfo',
+    url: config.baseUrl + '/api/getUserInfo',
     params
   })
 }

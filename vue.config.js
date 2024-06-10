@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: './',
+  // publicPath: './',
   outputDir: 'dist',
   devServer: {
     open: true, // 自动打开服务器

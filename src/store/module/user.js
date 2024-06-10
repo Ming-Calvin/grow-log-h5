@@ -1,13 +1,24 @@
-import {getToken, setToken, removeToken} from '@/utils/auth'
+import {
+  getToken,
+  setToken,
+  removeToken,
+  getRoles,
+  setRoles,
+  getPermissions,
+  setPermissions,
+  removeRoles,
+  removePermissions
+} from '@/utils/auth'
 import {login, getInfo} from '@/api/login'
 import router from '@/router'
+import store from '@/store'
 
 const user = {
   namespaced: true,
   state: {
     token: getToken(),
-    roles: [],
-    permissions: []
+    roles: getRoles() || [],
+    permissions: getPermissions() || []
   },
 
   mutations: {
@@ -17,9 +28,11 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+      setRoles(roles)
     },
     SET_PERMISSIONS: (state, permissions) => {
       state.permissions = permissions
+      setPermissions(permissions)
     }
   },
 
@@ -32,16 +45,24 @@ const user = {
         // 此时this指向store
         router.push({ name: 'home'})
         commit('SET_TOKEN', data.token)
+
+        // 获取用户信息
+        await store.dispatch('user/GetInfo')
       } catch (e) {
         console.log(e)
       }
     },
     // 获取用户信息
     async GetInfo( { commit, state } ) {
-      const userInfo = await getInfo(state.token)
+      try {
+        const userInfo = await getInfo()
 
-      commit('SET_ROLES', userInfo.roles)
-      commit('SET_PERMISSIONS', userInfo.permissions)
+        console.log(userInfo)
+      } catch (e) {
+        console.log(e)
+        // commit('SET_ROLES', userInfo.roles)
+        // commit('SET_PERMISSIONS', userInfo.permissions)
+      }
     },
     // 退出系统
     LogOut( { commit } ) {
@@ -49,6 +70,8 @@ const user = {
       commit('SET_ROLES', [])
       commit('SET_PERMISSIONS', [])
       removeToken()
+      removeRoles()
+      removePermissions()
     }
   }
 }
