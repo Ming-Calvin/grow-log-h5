@@ -33,15 +33,15 @@ export const registerConfig = [
     require: true
   },
   {
-    prop: 'userName',
+    prop: 'username',
     type: 'field',
-    label: 'userName',
+    label: 'username',
     require: true
   },
   {
-    prop: 'registrationCode',
+    prop: 'code',
     type: 'field',
-    label: 'registrationCode',
+    label: 'code',
     require: true,
     button: 'sendCode'
   }

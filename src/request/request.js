@@ -26,7 +26,7 @@ service.interceptors.request.use(
   (config) => {
     // 是否需要设置 token
     if (getToken()) {
-      config.headers['Authorization'] = 'Bearer ' + getToken()
+      config.headers['Authorization'] = getToken()
     }
 
     showLoading()

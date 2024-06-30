@@ -15,8 +15,7 @@ const router = new VueRouter({
 // 白名单
 const whiteList = [
   '/login',
-  '/register',
-  '/home'
+  '/register'
 ]
 
 router.beforeEach((to, from, next) => {

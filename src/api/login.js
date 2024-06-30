@@ -5,7 +5,7 @@ import request from '@/request/request'
 export function login(data) {
   return request({
     method: 'post',
-    url: config.baseUrl + '/api/login',
+    url: config.baseUrl + '/login',
     data
   })
 }
@@ -14,7 +14,7 @@ export function login(data) {
 export function getInfo(params) {
   return request({
     method: 'get',
-    url: config.baseUrl + '/api/getUserInfo',
+    url: config.baseUrl + '/userInfo',
     params
   })
 }
@@ -23,7 +23,7 @@ export function getInfo(params) {
 export function sendCode(data) {
   return request({
     method: 'post',
-    url: config.baseUrl + '/api/send-code',
+    url: config.baseUrl + '/send-code',
     data
   })
 }
@@ -31,7 +31,7 @@ export function sendCode(data) {
 export function register(data) {
   return request({
     method: 'post',
-    url: config.baseUrl + '/api/register',
+    url: config.baseUrl + '/register',
     data
   })
 }

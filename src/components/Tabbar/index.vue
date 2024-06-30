@@ -2,7 +2,8 @@
   <van-tabbar v-model="tabActive">
     <van-tabbar-item v-for="(item, index) in tabbarList"
                      :key="index"
-                     :name="item.name"
+                     replace
+                     :to="/home"
                      :icon="item.icon"
     >
       {{ item.label }}
@@ -16,22 +17,22 @@ export default {
   data() {
     return {
       // 激活的tab
-      tabActive: 0,
+      tabActive: 'home',
       // 标签列表
       tabbarList: [
         {
           name: 'home',
-          label: 'home',
+          to: '/home',
           icon: 'home-o'
         },
         {
-          name: 'write-noise',
-          label: 'write noise',
+          name: 'white-noise',
+          to: '/white-noise',
           icon: 'service-o'
         }
       ]
     }
-  }
+  },
 }
 </script>
 
