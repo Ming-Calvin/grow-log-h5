@@ -15,7 +15,7 @@ export default {
   components: {Metrics, HomeHeader},
   data() {
     return {
-      
+
     }
   }
 }
