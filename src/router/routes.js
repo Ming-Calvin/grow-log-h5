@@ -23,7 +23,7 @@ export const routes = [
       {
         path: '/home',
         name: 'home',
-        component: () => import('@/view/layout/home.vue')
+        component: () => import('@/view/layout/home/home.vue')
       },
       {
         path: '/white-noise',

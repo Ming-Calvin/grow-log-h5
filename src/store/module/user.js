@@ -18,7 +18,8 @@ const user = {
   state: {
     token: getToken(),
     roles: getRoles() || [],
-    permissions: getPermissions() || []
+    permissions: getPermissions() || [],
+    username: ''
   },
 
   mutations: {
@@ -33,6 +34,9 @@ const user = {
     SET_PERMISSIONS: (state, permissions) => {
       state.permissions = permissions
       setPermissions(permissions)
+    },
+    SET_USERNAME: (state, username) => {
+      state.username = username
     }
   },
 
@@ -42,9 +46,9 @@ const user = {
       try {
         const data = await login(userInfo)
 
+        commit('SET_TOKEN', data.token)
         // 此时this指向store
         router.push({ name: 'home'})
-        commit('SET_TOKEN', data.token)
 
         // 获取用户信息
         await store.dispatch('user/GetInfo')
@@ -58,6 +62,7 @@ const user = {
         const userInfo = await getInfo()
 
         console.log(userInfo)
+        commit('SET_USERNAME', userInfo.user.username)
       } catch (e) {
         console.log(e)
         // commit('SET_ROLES', userInfo.roles)

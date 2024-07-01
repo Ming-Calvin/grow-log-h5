@@ -10,7 +10,7 @@
                     type="primary"
                     native-type="button"
                     @click="sendCode">
-          Get Email Verification Code
+          {{ buttonText }}
         </van-button>
       </template>
     </CustomForm>
@@ -47,12 +47,21 @@ export default {
         }
 
         return acc
-      }, {})
+      }, {}),
+      countdown: 0,
+      timer: null
+    }
+  },
+  computed: {
+    buttonText() {
+      return this.countdown > 0 ? `${ this.countdown }  seconds`: 'Get Email Verification Code'
     }
   },
   methods: {
     // 发送验证码
     async sendCode() {
+      if(this.countdown) return
+
       const { email } = this.formData
 
       if(email && validEmail(email)) {
@@ -61,6 +70,14 @@ export default {
         } catch (e) {
           console.log(e)
         }
+
+        this.countdown = 60
+        this.timer = setInterval(() => {
+          this.countdown--
+          if(this.countdown <= 0) {
+            clearInterval(this.timer)
+          }
+        }, 1000)
       } else {
         mToast.fail('please enter your vaild email')
       }
@@ -80,6 +97,11 @@ export default {
     // 登录
     logIn() {
       this.$router.push({name: 'login'})
+    }
+  },
+  destroyed() {
+    if(this.timer) {
+      clearInterval(this.timer)
     }
   }
 }

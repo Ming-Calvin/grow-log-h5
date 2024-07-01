@@ -54,7 +54,7 @@ service.interceptors.response.use(res => {
     mToast.fail(msg)
     return Promise.reject('error')
   } else {
-    mToast.success(msg)
+    // mToast.success(msg)
     return res.data
   }
 },

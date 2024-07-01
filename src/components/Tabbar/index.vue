@@ -23,11 +23,13 @@ export default {
         {
           name: 'home',
           to: '/home',
+          label: 'home',
           icon: 'home-o'
         },
         {
           name: 'white-noise',
           to: '/white-noise',
+          label: 'white-noise',
           icon: 'service-o'
         }
       ]
