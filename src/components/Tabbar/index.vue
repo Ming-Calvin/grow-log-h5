@@ -3,7 +3,7 @@
     <van-tabbar-item v-for="(item, index) in tabbarList"
                      :key="index"
                      replace
-                     :to="/home"
+                     :to="item.to"
                      :icon="item.icon"
     >
       {{ item.label }}
@@ -32,7 +32,7 @@ export default {
         }
       ]
     }
-  },
+  }
 }
 </script>
 

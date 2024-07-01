@@ -10,6 +10,7 @@
                    key="no-keey-alive"></router-view>
 
     </transition>
+    <loading/>
 
     <tabbar></tabbar>
   </div>
@@ -17,13 +18,13 @@
 
 <script>
 import Tabbar from '@/components/Tabbar/index.vue'
+import Loading from '@/components/Loading/index.vue'
 
 export default {
   name: 'layout',
-  components: {Tabbar},
+  components: {Loading, Tabbar},
   data() {
     return {
-
     }
   },
   created() {

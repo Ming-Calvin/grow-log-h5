@@ -21,6 +21,8 @@
                 @click="logIn">
       Log In
     </van-button>
+
+    <Loading/>
   </div>
 </template>
 
@@ -29,10 +31,11 @@ import {registerConfig} from '@/forms/loginForm'
 import {validEmail} from '@/utils/validate'
 import mToast from '@/utils/toast'
 import {register, sendCode} from '@/api/login'
-// import {sendCode} from '@/api/login'
+import Loading from '@/components/Loading/index.vue'
 
 export default {
   name: 'register',
+  components: {Loading},
   data() {
     return {
       registerConfig: registerConfig,
@@ -54,7 +57,7 @@ export default {
 
       if(email && validEmail(email)) {
         try {
-          const res = await sendCode({ email })
+          await sendCode({ email })
         } catch (e) {
           console.log(e)
         }
