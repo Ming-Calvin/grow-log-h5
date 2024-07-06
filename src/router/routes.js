@@ -28,7 +28,7 @@ export const routes = [
       {
         path: '/white-noise',
         name: 'whiteNoise',
-        component: () => import('@/view/layout/whiteNoise.vue')
+        component: () => import('@/view/layout/whiteNoise/whiteNoise.vue')
       }
     ]
   }
