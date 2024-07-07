@@ -8,3 +8,11 @@ export function getWhiteNoiseList(params)  {
     params
   })
 }
+
+export function getWhiteNoiseById(id)  {
+  return request({
+    method: 'get',
+    url: config.baseUrl + `/getWhiteNoise/${id}`
+  })
+}
+

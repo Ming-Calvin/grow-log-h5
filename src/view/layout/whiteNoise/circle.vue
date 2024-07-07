@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <svg width="300"
-         height="300"
-         viewBox="0 0 300 300">
+    <svg width="280"
+         height="280"
+         viewBox="0 0 280 280">
       <circle class="progress-circle-bg"
-              cx="150"
-              cy="150"
-              r="100"
+              cx="140"
+              cy="140"
+              r="90"
       />
       <circle class="progress-circle-progress"
-              cx="150"
-              cy="150"
-              r="100"
+              cx="140"
+              cy="140"
+              r="90"
               :stroke-dasharray="circumference"
               :stroke-dashoffset="offset"
       />
@@ -22,6 +22,7 @@
       <van-icon :name="btnName"
                 size="50"
                 style="margin-left: 10px"
+                @click="audioPlay"
       />
     </div>
 
@@ -33,21 +34,36 @@ export default {
   name: 'circleProgress',
   data() {
     return {
-      btnName: 'pause'
     }
   },
   props: {
     percentage: {
       type: Number,
       require: true
+    },
+    isPlaying: {
+      type: Boolean,
+      require: true
     }
   },
   computed: {
     circumference() {
-      return 2 * Math.PI * 100
+      return 2 * Math.PI * 90
     },
     offset() {
-      return this.circumference - (this.percentage / 100) * this.circumference
+      return this.circumference - this.percentage * this.circumference
+    },
+    btnName() {
+      if(this.isPlaying) {
+        return 'pause'
+      } else {
+        return 'play'
+      }
+    }
+  },
+  methods: {
+    audioPlay() {
+      this.$emit('audioPlay')
     }
   }
 }
@@ -75,13 +91,13 @@ export default {
 .progress-circle-bg {
   fill: none;
   stroke: rgba(255, 255, 255, 0.2);
-  stroke-width: 12;
+  stroke-width: 15;
 }
 
 .progress-circle-progress {
   fill: none;
   stroke: white;
-  stroke-width: 12;
+  stroke-width: 15;
   stroke-linecap: round;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
