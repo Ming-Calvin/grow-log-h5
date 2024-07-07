@@ -1,7 +1,7 @@
 <template>
   <div class="journalList">
     <div>
-      <div class="day-year"> 34/365 </div>
+      <div class="day-year"> {{ journalList.length }}/365 </div>
       <div class="tip"> Journals this year. Keep it Up!</div>
     </div>
 
@@ -19,7 +19,7 @@
         <div class="calendar">
           <div v-for="(day, index) in daysInMonth"
                :key="index"
-               class="day">
+               :class="['day', { 'hasWrite': hasWrite.includes(String(day)) }]">
             <div class="circle">
               {{ day }}
             </div>
@@ -31,12 +31,17 @@
 </template>
 
 <script>
+import {getJournalList} from '@/api/journal'
+import moment from 'moment/moment'
+
 export default {
   name: 'journalList',
   data() {
     return {
       year: new Date().getFullYear(),
-      month: new Date().getMonth()
+      month: new Date().getMonth(),
+      journalList: [],
+      hasWrite: []
     }
   },
   computed: {
@@ -54,7 +59,22 @@ export default {
   methods: {
     addJournal() {
       this.$router.push({ name: 'newJournal' })
+    },
+    async getList() {
+      const startDate = moment().startOf('month').format('YYYY-MM-DD')
+      const endDate = moment().endOf('month').format('YYYY-MM-DD')
+
+      this.journalList = await getJournalList({ startDate, endDate })
+
+      this.hasWrite = this.uniqueDays(this.journalList)
+    },
+    uniqueDays(array) {
+      const days = array.map(entry => moment(entry.createdAt).format('D'))
+      return [...new Set(days)]
     }
+  },
+  created() {
+    this.getList()
   }
 }
 
@@ -150,6 +170,13 @@ export default {
         justify-content: center;
         align-items: center;
         background-color: white;
+      }
+
+      .hasWrite {
+        .circle {
+          background-color: #926247;
+          color: #fafafa;
+        }
       }
     }
   }

@@ -8,3 +8,11 @@ export function addJournal(data)  {
     data
   })
 }
+
+export function getJournalList(params) {
+  return request({
+    method: 'get',
+    url: config.baseUrl + '/journals',
+    params
+  })
+}
