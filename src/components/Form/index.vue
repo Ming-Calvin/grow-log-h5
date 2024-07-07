@@ -3,20 +3,46 @@
     <van-form @submit="onSubmit"
               ref="customForm">
       <template v-for="(item, index) in formConfig">
-        <!--输入框-->
-        <van-field :key="index"
-                   v-if="item.type === 'field'"
-                   v-model="data[item.prop]"
-                   :name="item.prop"
-                   :label="item.label"
-                   :type="item.fieldType"
-                   :placeholder="item.placeholder ? item.placeholder : 'please enter' + item.prop"
-                   :rules="getRules(item)">
-          <template #button>
-            <slot v-if="item.button"
-                  :name="item.button"></slot>
-          </template>
-        </van-field>
+        <div :key="index"
+             class="formItem"
+        >
+          <div class="label"> {{ item.label }}</div>
+
+          <!--输入框-->
+          <van-field v-if="item.type === 'field'"
+                     v-model="data[item.prop]"
+                     :name="item.prop"
+                     :type="item.fieldType"
+                     :maxlength="item.maxlength ? item.maxlength : 50"
+                     :placeholder="item.placeholder ? item.placeholder : 'please enter' + item.prop"
+                     :rules="getRules(item)">
+            <template #button>
+              <slot v-if="item.button"
+                    :name="item.button"></slot>
+            </template>
+          </van-field>
+
+          <!--textarea-->
+          <van-field v-if="item.type === 'textarea'"
+                     v-model="data[item.prop]"
+                     :name="item.prop"
+                     :rows="item.rows ? item.rows : 2"
+                     autosize
+                     type="textarea"
+                     :maxlength="item.maxlength ? item.maxlength : 500"
+                     show-word-limit
+                     :placeholder="item.placeholder ? item.placeholder : 'please enter' + item.prop"
+                     :rules="getRules(item)">
+          </van-field>
+
+          <!--slot-->
+          <van-field :name="item.prop"
+                     v-if="item.type === 'slot'">
+            <template #input>
+              <slot :name="item.slot"></slot>
+            </template>
+          </van-field>
+        </div>
 
         <!-- 开关 -->
         <van-field name="switch"
@@ -170,6 +196,8 @@
       <van-button round
                   block
                   type="info"
+                  color="#4b3425"
+                  class="confirmBtn"
                   native-type="submit">
         {{ submitBtn }}
       </van-button>
@@ -277,5 +305,30 @@ export default {
 </script>
 
 <style scoped lang="scss">
+::v-deep form {
+  .van-form {
+    padding: 10px;
+  }
 
+  .formItem {
+    padding: 10px;
+
+    .label {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .van-cell.van-field {
+      border-radius: 20px;
+    }
+
+    .van-cell.van-field {
+      padding: 10px;
+    }
+  }
+}
+
+.confirmBtn {
+  margin-top: 32px;
+}
 </style>

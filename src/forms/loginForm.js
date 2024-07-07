@@ -46,3 +46,25 @@ export const registerConfig = [
     button: 'sendCode'
   }
 ]
+
+export const newJournalConfig = [
+  {
+    prop: 'title',
+    type: 'field',
+    label: 'Journal Title',
+    require: true
+  },
+  {
+    prop: 'mood',
+    type: 'slot',
+    label: 'Select Your Emotion',
+    slot: 'emotion',
+    require: true
+  },
+  {
+    prop: 'content',
+    type: 'textarea',
+    label: 'Write Your Entry',
+    require: true
+  }
+]

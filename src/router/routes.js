@@ -29,7 +29,17 @@ export const routes = [
         path: '/white-noise',
         name: 'whiteNoise',
         component: () => import('@/view/layout/whiteNoise/whiteNoise.vue')
+      },
+      {
+        path: '/journal-list',
+        name: 'journaList',
+        component: () => import('@/view/layout/journalList/journalList.vue')
       }
     ]
+  },
+  {
+    path: '/newJournal',
+    name: 'newJournal',
+    component: () => import('@/view/NewJournal.vue')
   }
 ]

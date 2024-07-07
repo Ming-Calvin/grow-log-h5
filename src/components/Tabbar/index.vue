@@ -29,8 +29,14 @@ export default {
         {
           name: 'white-noise',
           to: '/white-noise',
-          label: 'white-noise',
+          label: 'White Noise',
           icon: 'service-o'
+        },
+        {
+          name: 'journal-list',
+          to: '/journal-list',
+          label: 'Journal List',
+          icon: 'notes-o'
         }
       ]
     }
