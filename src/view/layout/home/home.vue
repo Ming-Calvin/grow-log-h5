@@ -3,16 +3,20 @@
     <home-header></home-header>
 
     <metrics></metrics>
+
+
+    <tip></tip>
   </div>
 </template>
 
 <script>
 import HomeHeader from '@/view/layout/home/homeHeader.vue'
 import Metrics from '@/view/layout/home/metrics.vue'
+import Tip from '@/view/layout/home/tip.vue'
 
 export default {
   name: 'home',
-  components: {Metrics, HomeHeader},
+  components: {Tip, Metrics, HomeHeader},
   data() {
     return {
 
@@ -28,7 +32,7 @@ export default {
 .home {
   background-color: #f7f4f2;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   font-size: 16px;
 }
 </style>
