@@ -2,7 +2,7 @@ export const routes = [
   {
     path: '/',
     redirect: {
-      path: '/home'
+      path: '/journal-list'
     }
   },
   {
@@ -21,8 +21,8 @@ export const routes = [
     component: () => import('@/view/layout/index.vue'),
     children: [
       {
-        path: '/home',
-        name: 'home',
+        path: '/user',
+        name: 'user',
         component: () => import('@/view/layout/home/home.vue')
       },
       {
