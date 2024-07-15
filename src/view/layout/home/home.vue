@@ -2,25 +2,19 @@
   <div class="home">
     <home-header></home-header>
 
-    <metrics></metrics>
-
-
-    <tip></tip>
+    <setting></setting>
   </div>
 </template>
 
 <script>
 import HomeHeader from '@/view/layout/home/homeHeader.vue'
-import Metrics from '@/view/layout/home/metrics.vue'
-import Tip from '@/view/layout/home/tip.vue'
+import Setting from '@/view/layout/home/setting.vue'
 
 export default {
   name: 'home',
-  components: {Tip, Metrics, HomeHeader},
+  components: {Setting, HomeHeader},
   data() {
-    return {
-
-    }
+    return {}
   }
 }
 

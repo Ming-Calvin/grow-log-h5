@@ -21,10 +21,10 @@ export default {
       // 标签列表
       tabbarList: [
         {
-          name: 'home',
-          to: '/home',
-          label: 'home',
-          icon: 'home-o'
+          name: 'journal-list',
+          to: '/journal-list',
+          label: 'Journal List',
+          icon: 'notes-o'
         },
         {
           name: 'white-noise',
@@ -33,10 +33,10 @@ export default {
           icon: 'service-o'
         },
         {
-          name: 'journal-list',
-          to: '/journal-list',
-          label: 'Journal List',
-          icon: 'notes-o'
+          name: 'user',
+          to: '/user',
+          label: 'user',
+          icon: 'user-o'
         }
       ]
     }
