@@ -19,6 +19,7 @@
         <div class="calendar">
           <div v-for="(day, index) in daysInMonth"
                :key="index"
+               @click="chooseJournalDay(day)"
                :class="['day', { 'hasWrite': hasWrite.includes(String(day)) }]">
             <div class="circle">
               {{ day }}
@@ -27,6 +28,21 @@
         </div>
       </div>
     </div>
+
+    <van-popup v-model="isChooseShow"
+               class="chooseJournal">
+      <div class="title"> Please pick the journal you want to read! </div>
+
+      <div class="chooseList">
+        <div v-for="(item, index) in chooseList"
+             :key="index"
+             class="chooseItem"
+             @click="toJournalDetail(item.id)"
+        >
+          {{ index + 1 }} . {{ item.content }}
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -41,7 +57,10 @@ export default {
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
       journalList: [],
-      hasWrite: []
+      hasWrite: [],
+      // chose day's journal
+      chooseList: [],
+      isChooseShow: false
     }
   },
   computed: {
@@ -52,7 +71,6 @@ export default {
         days.push(i)
       }
 
-      console.log(days)
       return days
     }
   },
@@ -64,13 +82,23 @@ export default {
       const startDate = moment().startOf('month').format('YYYY-MM-DD')
       const endDate = moment().endOf('month').format('YYYY-MM-DD')
 
-      this.journalList = await getJournalList({ startDate, endDate })
+      this.journalList = (await getJournalList({ startDate, endDate })).data
 
       this.hasWrite = this.uniqueDays(this.journalList)
     },
     uniqueDays(array) {
       const days = array.map(entry => moment(entry.createdAt).format('D'))
       return [...new Set(days)]
+    },
+    chooseJournalDay(day) {
+      this.chooseList = this.journalList.filter(entry => {
+        return moment(entry.createdAt).format('D') == day
+      })
+
+      this.isChooseShow = true
+    },
+    toJournalDetail(id) {
+      this.$router.push({ name: 'journalDetail', query: { id } })
     }
   },
   created() {
@@ -181,4 +209,38 @@ export default {
     }
   }
 }
+
+.chooseJournal {
+  width: 80%;
+  height: 50%;
+  padding: 20px;
+  border-radius: 20px;
+
+  .title {
+    font-family: Urbanist;
+    font-size: 16px;
+  }
+
+  .chooseList {
+    font-family: Urbanist;
+    font-size: 14px;
+    margin-top: 20px;
+
+    .chooseItem {
+      background-color: #f7f4f2;
+      padding: 5px;
+      border-radius: 20px;
+      margin-bottom: 5px;
+      color: #4B3425;
+      text-indent: 1em;
+    }
+
+    .chooseItem:hover {
+      background-color: #926247;
+      color: #ffffff;
+    }
+  }
+}
+
+
 </style>

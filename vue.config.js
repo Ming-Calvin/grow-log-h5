@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: './',
+  // publicPath: './',
   outputDir: 'dist',
   devServer: {
     open: true, // 自动打开服务器
@@ -8,7 +8,7 @@ module.exports = {
     proxy: {
       // 代理设置，解决开发环境的跨域问题
       '/dev': {
-        target: 'http://43.153.109.242:3000', // 目标接口的域名和端口号
+        target: 'http://127.0.0.1:3000', // 目标接口的域名和端口号
         changeOrigin: true, //支持跨域
         pathRewrite: { '^/dev': '' } // 路径重写
       },

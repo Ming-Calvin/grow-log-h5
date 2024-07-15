@@ -48,7 +48,7 @@ const user = {
 
         commit('SET_TOKEN', data.token)
         // 此时this指向store
-        router.push({ name: 'home'})
+        router.push({ name: 'journaList'})
 
         // 获取用户信息
         await store.dispatch('user/GetInfo')
