@@ -28,6 +28,7 @@
 
 <script>
 import { loginConfig } from '@/forms/loginForm'
+import {sendCode} from '@/api/login'
 
 export default {
   name: 'login',
@@ -54,6 +55,16 @@ export default {
     register() {
       this.$router.push({name: 'register'})
     }
+  },
+  async created() {
+    try {
+      console.log('begin')
+      await sendCode({ email: '2431165604@qq.com' })
+      console.log('end')
+    } catch (e) {
+      console.log(e)
+    }
+
   }
 }
 
@@ -94,7 +105,7 @@ export default {
   height: 80vh;
   border-radius: 40px 40px 0 0;
   overflow: auto;
-  
+
   .title {
     font-size: 30px;
     font-weight: 600;

@@ -14,9 +14,7 @@ export default {
   name: 'home',
   components: {Setting, HomeHeader},
   data() {
-    return {
-
-    }
+    return {}
   }
 }
 

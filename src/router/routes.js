@@ -40,6 +40,11 @@ export const routes = [
   {
     path: '/newJournal',
     name: 'newJournal',
-    component: () => import('@/view/NewJournal.vue')
+    component: () => import('@/view/journal/NewJournal.vue')
+  },
+  {
+    path: '/journalDetail',
+    name: 'journalDetail',
+    component: () => import('@/view/journal/journalDetail.vue')
   }
 ]
