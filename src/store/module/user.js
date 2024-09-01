@@ -12,6 +12,7 @@ import {
 import {login, getInfo} from '@/api/login'
 import router from '@/router'
 import store from '@/store'
+import mToast from '@/utils/toast'
 
 const user = {
   namespaced: true,
@@ -44,16 +45,18 @@ const user = {
     // 登录
     async Login( { commit }, userInfo ) {
       try {
-        const data = await login(userInfo)
+        const loginData = await login(userInfo)
 
-        commit('SET_TOKEN', data.token)
+        mToast.success(loginData.message)
+
+        commit('SET_TOKEN', loginData.data.token)
         // 此时this指向store
         router.push({ name: 'home'})
 
         // 获取用户信息
         await store.dispatch('user/GetInfo')
       } catch (e) {
-        console.log(e)
+        mToast.fail(e.response.data.message)
       }
     },
     // 获取用户信息
@@ -61,8 +64,7 @@ const user = {
       try {
         const userInfo = await getInfo()
 
-        console.log(userInfo)
-        commit('SET_USERNAME', userInfo.user.username)
+        commit('SET_USERNAME', userInfo.data.username)
       } catch (e) {
         console.log(e)
         // commit('SET_ROLES', userInfo.roles)

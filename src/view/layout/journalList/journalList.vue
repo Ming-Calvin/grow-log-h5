@@ -47,12 +47,12 @@ export default {
   computed: {
     daysInMonth() {
       const date = new Date(this.year, this.month + 1, 0)
+
       const days = []
       for (let i = 1; i <= date.getDate(); i++) {
         days.push(i)
       }
 
-      console.log(days)
       return days
     }
   },
@@ -61,12 +61,7 @@ export default {
       this.$router.push({ name: 'newJournal' })
     },
     async getList() {
-      const startDate = moment().startOf('month').format('YYYY-MM-DD')
-      const endDate = moment().endOf('month').format('YYYY-MM-DD')
 
-      this.journalList = await getJournalList({ startDate, endDate })
-
-      this.hasWrite = this.uniqueDays(this.journalList)
     },
     uniqueDays(array) {
       const days = array.map(entry => moment(entry.createdAt).format('D'))
@@ -74,7 +69,7 @@ export default {
     }
   },
   created() {
-    this.getList()
+    // this.getList()
   }
 }
 

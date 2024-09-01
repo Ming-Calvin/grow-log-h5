@@ -88,6 +88,8 @@ export default {
             clearInterval(this.timer)
           }
         }, 1000)
+
+        mToast.success('verification code sent')
       } else {
         mToast.fail('please enter your vaild email')
       }

@@ -5,17 +5,16 @@ import request from '@/request/request'
 export function login(data) {
   return request({
     method: 'post',
-    url: config.baseUrl + '/login',
+    url: config.baseUrl + '/loginUser',
     data
   })
 }
 
 // 获取用户信息
-export function getInfo(params) {
+export function getInfo() {
   return request({
     method: 'get',
-    url: config.baseUrl + '/userInfo',
-    params
+    url: config.baseUrl + '/getUserInfo'
   })
 }
 
@@ -23,7 +22,7 @@ export function getInfo(params) {
 export function sendCode(data) {
   return request({
     method: 'post',
-    url: config.baseUrl + '/send-code',
+    url: config.baseUrl + '/sendVerificationCode',
     data
   })
 }
@@ -31,7 +30,7 @@ export function sendCode(data) {
 export function register(data) {
   return request({
     method: 'post',
-    url: config.baseUrl + '/register',
+    url: config.baseUrl + '/registerUser',
     data
   })
 }
