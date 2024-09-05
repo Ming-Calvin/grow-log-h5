@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import {getJournalList} from '@/api/journal'
+import {getDiaryDatesByMonth} from '@/api/journal'
 import moment from 'moment/moment'
 
 export default {
@@ -79,16 +79,11 @@ export default {
       this.$router.push({ name: 'newJournal' })
     },
     async getList() {
-      const startDate = moment().startOf('month').format('YYYY-MM-DD')
-      const endDate = moment().endOf('month').format('YYYY-MM-DD')
+      const date = this.$moment(new Date()).format('YYYY-MM')
 
-      this.journalList = (await getJournalList({ startDate, endDate })).data
+      console.log(date, 'date')
 
-      this.hasWrite = this.uniqueDays(this.journalList)
-    },
-    uniqueDays(array) {
-      const days = array.map(entry => moment(entry.createdAt).format('D'))
-      return [...new Set(days)]
+      this.journalList = await getDiaryDatesByMonth({date})
     },
     chooseJournalDay(day) {
       this.chooseList = this.journalList.filter(entry => {

@@ -9,10 +9,10 @@ export function addJournal(data)  {
   })
 }
 
-export function getJournalList(params) {
+export function getDiaryDatesByMonth(params) {
   return request({
     method: 'get',
-    url: config.baseUrl + '/journals',
+    url: config.baseUrl + '/getDiaryDatesByMonth',
     params
   })
 }

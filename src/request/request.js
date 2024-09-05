@@ -41,7 +41,10 @@ service.interceptors.response.use(res => {
   const code = res.data.code || 200
   const msg = errorCode[code] || res.data.msg || errorCode['default']
   hideLoading()
-  if (code === 401) {
+  if (code === 400) {
+    console.log(msg, 'msg')
+    mToast.fail(msg)
+  }else if (code === 401) {
     console.log(msg, 'msg')
     mToast.fail(msg)
   } else if (code === 404) {
@@ -59,11 +62,7 @@ service.interceptors.response.use(res => {
   }
 },
 error => {
-  let { response } = error
-  const msg = response.data.msg
-
-  hideLoading()
-  mToast.fail(msg)
+  console.log(error)
   return Promise.reject(error)
 })
 
