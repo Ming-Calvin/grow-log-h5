@@ -55,16 +55,6 @@ export default {
     register() {
       this.$router.push({name: 'register'})
     }
-  },
-  async created() {
-    try {
-      console.log('begin')
-      await sendCode({ email: '2431165604@qq.com' })
-      console.log('end')
-    } catch (e) {
-      console.log(e)
-    }
-
   }
 }
 
