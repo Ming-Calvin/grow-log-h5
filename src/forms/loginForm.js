@@ -66,5 +66,12 @@ export const newJournalConfig = [
     type: 'textarea',
     label: 'Write Your Entry',
     require: true
+  },
+  {
+    prop: 'file',
+    type: 'slot',
+    label: 'Select Your JournalPicture',
+    slot: 'file',
+    require: true
   }
 ]

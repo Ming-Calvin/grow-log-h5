@@ -1,8 +1,8 @@
 <template>
   <div class="journalList">
     <div>
-      <div class="day-year"> {{ journalList.length }}/365 </div>
-      <div class="tip"> Journals this year. Keep it Up!</div>
+      <div class="day-year"> {{ journalList.length }}/30 </div>
+      <div class="tip"> Journals this month. Keep it Up!</div>
     </div>
 
     <div class="list">
@@ -20,7 +20,7 @@
           <div v-for="(day, index) in daysInMonth"
                :key="index"
                @click="chooseJournalDay(day)"
-               :class="['day', { 'hasWrite': hasWrite.includes(String(day)) }]">
+               :class="['day', { 'hasWrite': hasWrite.includes(day) }]">
             <div class="circle">
               {{ day }}
             </div>
@@ -39,7 +39,7 @@
              class="chooseItem"
              @click="toJournalDetail(item.id)"
         >
-          {{ index + 1 }} . {{ item.content }}
+          {{ index + 1 }} . {{ item.title }}
         </div>
       </div>
     </van-popup>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import {getDiaryDatesByMonth} from '@/api/journal'
+import {getDiaryDatesByMonth, getDiaryEntriesByDate} from '@/api/journal'
 import moment from 'moment/moment'
 
 export default {
@@ -79,16 +79,30 @@ export default {
       this.$router.push({ name: 'newJournal' })
     },
     async getList() {
+      // 格式化时间
       const date = this.$moment(new Date()).format('YYYY-MM')
 
-      console.log(date, 'date')
+      // 获取日志数组
+      let journalList = (await getDiaryDatesByMonth({date})).data.diaryList
 
-      this.journalList = await getDiaryDatesByMonth({date})
-    },
-    chooseJournalDay(day) {
-      this.chooseList = this.journalList.filter(entry => {
-        return moment(entry.createdAt).format('D') == day
+      this.hasWrite = journalList.map(item => {
+        return new Date(item).getDate()
       })
+    },
+    async chooseJournalDay(day) {
+      const currentDate = new Date()
+      const year = currentDate.getFullYear()
+      const month = currentDate.getMonth()
+
+      // 获取当月指定天数的日期
+      const targetDate = this.$moment(new Date(year, month, day)).format('YYYY-MM-DD')
+
+      let params = {
+        startDate: targetDate,
+        endDate: targetDate
+      }
+
+      this.chooseList = (await getDiaryEntriesByDate(params)).data.diary
 
       this.isChooseShow = true
     },
@@ -125,6 +139,7 @@ export default {
   letter-spacing: 0.05em;
   color: #FFFFFF;
   margin-bottom: 12px;
+  text-align: center;
 }
 
 .tip {
@@ -138,6 +153,7 @@ export default {
   height: 50vh;
   background-color: transparent;
   position: relative;
+  margin-bottom: 30px;
 
   .shape {
     width: 100%;

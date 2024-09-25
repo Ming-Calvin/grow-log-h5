@@ -193,6 +193,7 @@
                       @confirm="calendarConfirm(item, $event)" />
       </template>
 
+      <template #formComponent></template>
       <van-button round
                   block
                   type="info"

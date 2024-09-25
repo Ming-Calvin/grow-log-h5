@@ -21,6 +21,14 @@
             </div>
           </div>
         </template>
+
+        <template #file>
+          <van-uploader
+            :max-count="1"
+            :after-read="afterRead"
+            accept="image/*"
+          />
+        </template>
       </CustomForm>
     </div>
   </div>
@@ -67,7 +75,9 @@ export default {
           label: 'Overjoyed'
         }
       ],
-      selectedEmotion: 'sad'
+      selectedEmotion: 'sad',
+      // 附件
+      file: []
     }
   },
   methods: {
@@ -76,6 +86,7 @@ export default {
     },
     async addJournal(data) {
       data.mood = this.selectedEmotion
+      data.file = this.file
 
       try {
         const res = await addJournal(data)
@@ -92,6 +103,9 @@ export default {
     },
     backRouter() {
       this.$router.push({ name: 'journaList' })
+    },
+    afterRead(file) {
+      this.file = file.file
     }
   }
 }
