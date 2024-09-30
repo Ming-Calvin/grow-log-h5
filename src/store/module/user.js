@@ -53,8 +53,6 @@ const user = {
         // 此时this指向store
         router.push({ name: 'journaList'})
 
-        // 获取用户信息
-        await store.dispatch('user/GetInfo')
       } catch (e) {
         mToast.fail(e.response.data.message)
       }
@@ -64,7 +62,7 @@ const user = {
       try {
         const userInfo = await getInfo()
 
-        commit('SET_USERNAME', userInfo.data.username)
+        commit('SET_USERNAME', userInfo.data[0].username)
       } catch (e) {
         console.log(e)
         // commit('SET_ROLES', userInfo.roles)

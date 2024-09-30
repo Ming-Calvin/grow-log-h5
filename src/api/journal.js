@@ -27,3 +27,10 @@ export function getDiaryEntriesByDate(params) {
     params
   })
 }
+
+export function getDiaryEntryById(id) {
+  return request({
+    method: 'get',
+    url: config.baseUrl + '/getDiaryEntryById/' + id
+  })
+}

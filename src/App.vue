@@ -5,8 +5,16 @@
 </template>
 
 <script>
+import {getToken} from '@/utils/auth'
+
 export default {
-  name: 'App'
+  name: 'App',
+  async created() {
+    if(getToken()) {
+      // 获取用户信息
+      await this.$store.dispatch('user/GetInfo')
+    }
+  }
 }
 </script>
 

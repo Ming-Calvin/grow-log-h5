@@ -24,6 +24,7 @@
 
         <template #file>
           <van-uploader
+            v-model="fileList"
             :max-count="1"
             :after-read="afterRead"
             accept="image/*"
@@ -77,7 +78,8 @@ export default {
       ],
       selectedEmotion: 'sad',
       // 附件
-      file: []
+      file: '',
+      fileList: []
     }
   },
   methods: {
@@ -106,6 +108,8 @@ export default {
     },
     afterRead(file) {
       this.file = file.file
+
+      console.log(this.fileList)
     }
   }
 }

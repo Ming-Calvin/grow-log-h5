@@ -11,6 +11,9 @@ Vue.use(Vant)
 // 移动端响应式布局
 import 'lib-flexible'
 
+// 引入svg组件
+import './icons/index'
+
 // vConsole
 import VConsole from 'vconsole'
 const vConsole = new VConsole()

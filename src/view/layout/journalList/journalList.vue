@@ -37,7 +37,7 @@
         <div v-for="(item, index) in chooseList"
              :key="index"
              class="chooseItem"
-             @click="toJournalDetail(item.id)"
+             @click="toJournalDetail(item.diaryId)"
         >
           {{ index + 1 }} . {{ item.title }}
         </div>

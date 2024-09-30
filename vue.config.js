@@ -1,3 +1,8 @@
+const path = require('path')
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
   // publicPath: './',
   outputDir: 'dist',
@@ -42,6 +47,22 @@ module.exports = {
       .options({
         remUnit: 37.5, // 1rem 对应 75px
         remPrecision: 8 // rem 小数点后保留的位数
+      })
+      .end()
+    //设置svg
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/icons'))
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
       })
       .end()
   },
