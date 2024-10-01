@@ -1,5 +1,9 @@
 <template>
   <div class="whiteNoise">
+    <Back :title="'Noise List'"
+          class="back"
+    />
+
     <div class="currentNoise">
       {{ currentNoise?.name }}
     </div>
@@ -29,7 +33,7 @@
                     style="margin-right: 5px"
                     color="#fe814b"
           />
-          <span> {{ formatTime(currentDuration) }} </span>
+          <span> {{ nextNoise?.play_count }} </span>
         </div>
       </div>
     </div>
@@ -61,10 +65,11 @@
 import {getWhiteNoiseById, getWhiteNoiseList} from '@/api/white-noise'
 import CircleProgress from '@/view/layout/whiteNoise/circle.vue'
 import {Dialog, Toast} from 'vant'
+import Back from '@/components/Back/index.vue'
 
 export default {
   name: 'whiteNoise',
-  components: {CircleProgress},
+  components: {Back, CircleProgress},
   data() {
     return {
       whiteNoiseList: [],
@@ -84,9 +89,7 @@ export default {
   methods: {
     async getWhiteNoise() {
       try {
-        const res = await getWhiteNoiseList()
-
-        this.whiteNoiseList = res.whiteNoises
+        this.whiteNoiseList = (await getWhiteNoiseList()).data.whiteNoise
 
         this.currentNoise = this.whiteNoiseList[0]
         this.nextNoise = this.whiteNoiseList[1]
@@ -95,14 +98,15 @@ export default {
       }
 
       if(this.currentNoise) {
-        await this.whiteNoiseById(this.currentNoise.id)
+        await this.whiteNoiseById(this.currentNoise.white_noise_id)
       }
     },
     async whiteNoiseById(id) {
       try {
-        this.currentNoise.media = await getWhiteNoiseById(id)
+        const media = (await getWhiteNoiseById(id)).data.whiteNoise.attachments[0].file_url
+        // this.currentNoise.media = (await getWhiteNoiseById(id)).data.whiteNoise.attachments[0].file_url
 
-        this.$refs.audio.src = this.currentNoise.media.url
+        this.$refs.audio.src = media
       } catch (e) {
         console.log(e)
       }
@@ -142,11 +146,11 @@ export default {
       this.$refs.audio.pause()
       this.isPlaying = false
       this.currentNoise = this.nextNoise
-      await this.whiteNoiseById(this.nextNoise.id)
+      await this.whiteNoiseById(this.nextNoise.white_noise_id)
       this.currentDuration = 0
       this.currentTime = 0
       this.$refs.audio.load()
-      this.nextNoise =  this.whiteNoiseList.length > this.nextNoise.id ? this.whiteNoiseList[this.nextNoise.id] : this.whiteNoiseList[0]
+      this.nextNoise =  this.whiteNoiseList.length > this.nextNoise.white_noise_id ? this.whiteNoiseList[this.nextNoise.white_noise_id] : this.whiteNoiseList[0]
     },
 
     // noise picker
@@ -166,6 +170,12 @@ export default {
 
 
 <style scoped lang="scss">
+.back {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+}
+
 .whiteNoise {
   background-image: url('@/assets/picture/white-noise-background.png');
   background-color: #9bb068;
@@ -173,7 +183,7 @@ export default {
   background-position: center;
   background-size: 100% auto;
   height: 100vh;
-  padding: 10% 0 20%;
+  padding: 20% 0 10%;
   margin: 0;
   @include flex-j-a(space-around, center);
   flex-direction: column;
@@ -200,7 +210,7 @@ export default {
   background-color: #fff;
   padding: 15px;
   @include flex-j-a(start, center);
-  
+
   .icon {
     background-color: #f7f4f2;
     width: 72px;

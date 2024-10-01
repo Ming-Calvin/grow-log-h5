@@ -26,9 +26,9 @@ export const routes = [
         component: () => import('@/view/layout/home/home.vue')
       },
       {
-        path: '/white-noise',
-        name: 'whiteNoise',
-        component: () => import('@/view/layout/whiteNoise/whiteNoise.vue')
+        path: '/white-noise-list',
+        name: 'whiteNoiseList',
+        component: () => import('@/view/layout/whiteNoise/List.vue')
       },
       {
         path: '/journal-list',
@@ -46,5 +46,10 @@ export const routes = [
     path: '/journalDetail',
     name: 'journalDetail',
     component: () => import('@/view/journal/journalDetail.vue')
+  },
+  {
+    path: '/white-noise',
+    name: 'whiteNoise',
+    component: () => import('@/view/layout/whiteNoise/whiteNoise.vue')
   }
 ]

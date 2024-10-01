@@ -28,7 +28,7 @@ export default {
         },
         {
           name: 'white-noise',
-          to: '/white-noise',
+          to: '/white-noise-list',
           label: 'White Noise',
           icon: 'service-o'
         },

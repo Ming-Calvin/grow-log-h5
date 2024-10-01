@@ -4,7 +4,7 @@ import request from '@/request/request'
 export function getWhiteNoiseList(params)  {
   return request({
     method: 'get',
-    url: config.baseUrl + '/white-noises',
+    url: config.baseUrl + '/getWhiteNoiseList',
     params
   })
 }
@@ -12,7 +12,7 @@ export function getWhiteNoiseList(params)  {
 export function getWhiteNoiseById(id)  {
   return request({
     method: 'get',
-    url: config.baseUrl + `/getWhiteNoise/${id}`
+    url: config.baseUrl + `/getWhiteNoiseById/${id}`
   })
 }
 
