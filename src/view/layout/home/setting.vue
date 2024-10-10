@@ -4,6 +4,7 @@
     <div class="settingList">
       <div class="settingItem"
            v-for="(item, index) in settingList"
+           @click="onSet(item)"
            :key="index">
 
         <div class="leftContent">
@@ -51,6 +52,13 @@
         <van-icon name="arrow" />
       </div>
     </div>
+    
+    <van-share-sheet
+      v-model="showShare"
+      title="ShareSheet"
+      :options="shareOptions"
+      @select="onShare"
+    />
   </div>
 </template>
 
@@ -62,13 +70,33 @@ export default {
       settingList: [
         {
           icon: 'manager-o',
-          name: 'Personal Information'
+          name: 'Personal Information',
+          value: 'person'
         },
         {
           icon: 'link-o',
-          name: 'Invite Friends'
+          name: 'Invite Friends',
+          value: 'invite'
         }
+      ],
+      showShare: false,
+      shareOptions: [
+        { name: '复制链接', icon: 'link' }
       ]
+    }
+  },
+  methods: {
+    // 设置
+    onSet(item) {
+      switch(item.value) {
+      case 'invite':
+        this.invite()
+        break
+      }
+    },
+    // 邀请
+    invite() {
+      this.showShare = true
     }
   }
 }
